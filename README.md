@@ -8,4 +8,3 @@ Miscellaneous data visualizations created with *ggplot* and *plotly* in RStudio.
 
 ![alt text](https://github.com/bhipola/RDataViz/blob/master/Polarization_COVID/ridgeplot_marzo_eng.png)
 
-![alt text](https://github.com/bhipola/RDataViz/blob/master/Polarization_COVID/interactive_graph.html)
