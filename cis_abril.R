@@ -14,9 +14,9 @@ library(ggthemes)
 library(stringr)
 library(gridExtra)
 
-cis_abril<-read_sav("C:/Users/belen/OneDrive/Documentos/Cursos y artículos/CIS/ABRIL/3279.sav")
+cis_abril<-read_sav("C:/Users/belen/OneDrive/Documentos/Cursos y artÃ­culos/CIS/ABRIL/3279.sav")  #to download these files visit CIS website (http://www.cis.es/cis/opencm/ES/1_encuestas/estudios/ver.jsp?estudio=14505)
 
-cis_marzo<-read_sav("C:/Users/belen/OneDrive/Documentos/Cursos y artículos/CIS/MARZO/3277.sav")
+cis_marzo<-read_sav("C:/Users/belen/OneDrive/Documentos/Cursos y artÃ­culos/CIS/MARZO/3277.sav")
 
 escideol_decomp<-cis_marzo %>% group_by(ESCIDEOL)%>% summarise(n=n())
 escideol_indecisos<- cis_marzo %>% filter(ESCIDEOL %in% c(98,99))
@@ -28,21 +28,21 @@ sub<-cis_marzo %>% filter(ESCIDEOLPAR_1 %in% 1:10 & ESCIDEOLPAR_2 %in% 1:10 & ES
   filter(ESCIDEOLPAR_5 %in% 1:10 & ESCIDEOLPAR_6 %in% 1:10 & ESCIDEOLPAR_7 %in% 1:10 & ESCIDEOL %in% 1:10) %>%
   select(ESCIDEOL,ESCIDEOLPAR_1,ESCIDEOLPAR_2,ESCIDEOLPAR_3,ESCIDEOLPAR_4,ESCIDEOLPAR_5,ESCIDEOLPAR_6,ESCIDEOLPAR_7)%>% 
   lapply(as.integer) %>% as.data.frame()
-names(sub)<-c('Encuestado', 'PSOE','PP','VOX','Podemos','IU','Ciudadanos','Más País')
+names(sub)<-c('Encuestado', 'PSOE','PP','VOX','Podemos','IU','Ciudadanos','MÃ¡s PaÃ­s')
 dim(sub)
 sub_gathered<-gather(sub, key='partido', value='valor', -c(Encuestado))
 #loadfonts()
 #names(windowsFonts())
-sub_gathered_2<-sub_gathered %>% filter(partido != 'Más País' & partido != 'IU')
+sub_gathered_2<-sub_gathered %>% filter(partido != 'MÃ¡s PaÃ­s' & partido != 'IU')
 
 ridgeplot<-ggplot(sub_gathered_2, aes(x=valor, y=as.factor(Encuestado), fill=stat(x)))+
   geom_density_ridges_gradient(scale=3) +
-  scale_fill_viridis_c(direction=-1, name='Escala ideológica') +
+  scale_fill_viridis_c(direction=-1, name='Escala ideolÃ³gica') +
   scale_x_continuous(breaks = 1:10)+
   facet_wrap(partido~., ncol=3)+
-  labs(x="Percepción de la posición del partido",
-       y="Ubicación ideológica del encuestado",
-       title="Percepción de la posición del partido según la ideología del encuestado ")+
+  labs(x="PercepciÃ³n de la posiciÃ³n del partido",
+       y="UbicaciÃ³n ideolÃ³gica del encuestado",
+       title="PercepciÃ³n de la posiciÃ³n del partido segÃºn la ideologÃ­a del encuestado ")+
   theme_fivethirtyeight()+
   theme(axis.title = element_text(size=11),
         legend.position=c(0.85,0.25),
@@ -54,12 +54,12 @@ ridgeplot<-ggplot(sub_gathered_2, aes(x=valor, y=as.factor(Encuestado), fill=sta
 ridgeplot
 grid.text("10 - Extrema \nderecha", x = 0.86, y = 0.35,gp=gpar(fontsize=9,col='grey34'))  
 grid.text("1 - Extrema \nizquierda", x = 0.86, y = 0.21, gp=gpar(fontsize=9,col='grey34'))  
-grid.text("Fuente: Barómetro marzo 2020 (CIS)", x = 0.84, y = 0.015,gp=gpar(fontsize=9,col='grey56', fontface="italic"))  
+grid.text("Fuente: BarÃ³metro marzo 2020 (CIS)", x = 0.84, y = 0.015,gp=gpar(fontsize=9,col='grey56', fontface="italic"))  
 ridgeplot<-grid.grab()
 ridgeplot<-ggplotify::as.ggplot(ridgeplot)
 
 
-ggsave("C:/Users/belen/OneDrive/Documentos/Cursos y artículos/CIS/ABRIL/ridgeplot_marzo.png",ridgeplot, dpi=350, width=7.34, height =5.67)
+ggsave("C:/Users/belen/OneDrive/Documentos/Cursos y artÃ­culos/CIS/ABRIL/ridgeplot_marzo.png",ridgeplot, dpi=350, width=7.34, height =5.67)
 
 
 ###### COVID ABRIL ########
@@ -84,7 +84,7 @@ cis_covid<- cis_abril %>% select(ESCIDEOL, INTENCIONG, P3,P7,P12,P14, P16)%>%
                                                                              ifelse(INTENCIONG==5, 'IU',
                                                                                     ifelse(INTENCIONG==8, 'ERC',
                                                                                            ifelse(INTENCIONG==98,'NS',
-                                                                                                  ifelse(INTENCIONG==97, 'No votaría',
+                                                                                                  ifelse(INTENCIONG==97, 'No votarÃ­a',
                                                                                                          ifelse(INTENCIONG==99, 'NC','Otro')))))))))))
 
 
@@ -98,11 +98,11 @@ cis_covid$P7<-factor(x=cis_covid$P7,
                      labels=c('Mucha confianza','Bastante confianza', 'Regular','Poca confianza','Ninguna confianza','NS','NC'))
 cis_covid$P12<-factor(x=cis_covid$P12,
                      levels = c('1','2','3','4','5', 'NS','NC'),
-                     labels = c('Mucho mejor','Algo mejor','Prácticamente igual','Algo peor','Mucho peor','NS','NC'))
+                     labels = c('Mucho mejor','Algo mejor','PrÃ¡cticamente igual','Algo peor','Mucho peor','NS','NC'))
 cis_covid$P14<-factor(x=cis_covid$P14,
                      levels = c('1','2','NS','NC'),
-                     labels = c('Cree que ahora hay que apoyar al Gobierno y dejar las críticas para otro momento',
-                                'Cree que deben continuar haciendo todas las críticas que consideren oportunas',
+                     labels = c('Cree que ahora hay que apoyar al Gobierno y dejar las crÃ­ticas para otro momento',
+                                'Cree que deben continuar haciendo todas las crÃ­ticas que consideren oportunas',
                                 'NS','NC'))
 cis_covid$P16<-factor(x=cis_covid$P16,
                      levels = c('1','2','3', 'NS','NC'),
@@ -120,7 +120,7 @@ cis_p3<-cis_covid %>% group_by(ESCIDEOL,P3) %>% summarise(n=n()) %>% mutate(ptg=
 
 cis_p7<-cis_covid %>% group_by(ESCIDEOL,P7) %>% summarise(n=n()) %>% mutate(ptg=n/sum(n))
 
-caption<-textGrob('Fuente: Barómetro especial de abril 2020 (CIS)',gp=gpar(fontsize=9, fontface="italic", col='gray43'))
+caption<-textGrob('Fuente: BarÃ³metro especial de abril 2020 (CIS)',gp=gpar(fontsize=9, fontface="italic", col='gray43'))
 
 pal<-brewer.pal(9,'YlGnBu')
 pal_sub<-c(pal[3:7],'bisque2','lightsalmon3')
@@ -130,15 +130,15 @@ p3<-ggplot(cis_p3, aes(x=ESCIDEOL,y=ptg*100, fill=P3))+
   #coord_flip()+
   theme_fivethirtyeight()+
   scale_fill_manual(values=pal_sub)+
-  ggtitle('Respecto a las medidas que se han adoptado en España
-para combatir el COVID-19, ¿cree Ud. que son muy necesarias,
+  ggtitle('Respecto a las medidas que se han adoptado en EspaÃ±a
+para combatir el COVID-19, Â¿cree Ud. que son muy necesarias,
 necesarias, poco necesarias o nada necesarias?')+
   theme(plot.title = element_text(size=14),
         legend.title = element_blank(),
         axis.title = element_text(size=12),
         legend.position='right',
         legend.direction='vertical')+
-  labs(y='Porcentaje de encuestados', x='Escala ideológica')+
+  labs(y='Porcentaje de encuestados', x='Escala ideolÃ³gica')+
   coord_cartesian(ylim=c(0,100),xlim=c(0,10),clip = "off")+
   annotation_custom(caption,xmin = 11.7,xmax=11.7, ymax=-19, ymin=-19)
 
@@ -148,11 +148,11 @@ p7<-ggplot(cis_p7, aes(x=ESCIDEOL,y=ptg*100, fill=P7))+
  # coord_flip()+
   theme_fivethirtyeight()+
   scale_fill_manual(values=pal_sub)+
-  ggtitle('La política que está siguiendo el Gobierno actual para luchar
-contra el COVID-19 en su conjunto, ¿le merece a Ud. mucha
+  ggtitle('La polÃ­tica que estÃ¡ siguiendo el Gobierno actual para luchar
+contra el COVID-19 en su conjunto, Â¿le merece a Ud. mucha
 confianza, bastante confianza, poca confianza o ninguna
 confianza?')+
-  labs(y='Porcentaje de encuestados', x='Escala ideológica')+
+  labs(y='Porcentaje de encuestados', x='Escala ideolÃ³gica')+
   theme(plot.title = element_text(size=14),
         legend.title = element_blank(),
         axis.title = element_text(size=12),
@@ -162,9 +162,9 @@ confianza?')+
   annotation_custom(caption,xmin = 12.2,xmax=12.2, ymax=-19, ymin=-19)
 
 
-ggsave("C:/Users/belen/OneDrive/Documentos/Cursos y artículos/CIS/ABRIL/p7_4.png",p7, dpi=350, width=6.76, height =5.79 )
+ggsave("C:/Users/belen/OneDrive/Documentos/Cursos y artÃ­culos/CIS/ABRIL/p7_4.png",p7, dpi=350, width=6.76, height =5.79 )
 
-ggsave("C:/Users/belen/OneDrive/Documentos/Cursos y artículos/CIS/ABRIL/p3_4.png",p3, dpi=350, width=6.76, height =5.79 )
+ggsave("C:/Users/belen/OneDrive/Documentos/Cursos y artÃ­culos/CIS/ABRIL/p3_4.png",p3, dpi=350, width=6.76, height =5.79 )
 
 cis_p7 %>% filter(ESCIDEOL==1)
 cis_p7 %>% filter(ESCIDEOL==10)
@@ -173,11 +173,11 @@ cis_p7 %>% filter(ESCIDEOL==10)
 #   geom_bar(position = 'fill')+
 #   coord_flip()+
 #   theme_fivethirtyeight()+
-#   ggtitle('Si en estos momentos tuviéramos en España un Gobierno
-# presidido por Pablo Casado (PP), ¿cree Ud. que la lucha contra
-# el COVID-19 se estaría haciendo mucho mejor, algo mejor,
-# prácticamente igual, algo peor o mucho peor que la que se está
-# haciendo con el Gobierno presidido por Pedro Sánchez (PSOE)?')+
+#   ggtitle('Si en estos momentos tuviÃ©ramos en EspaÃ±a un Gobierno
+# presidido por Pablo Casado (PP), Â¿cree Ud. que la lucha contra
+# el COVID-19 se estarÃ­a haciendo mucho mejor, algo mejor,
+# prÃ¡cticamente igual, algo peor o mucho peor que la que se estÃ¡
+# haciendo con el Gobierno presidido por Pedro SÃ¡nchez (PSOE)?')+
 #   theme(plot.title = element_text(size=14))
 # 
 # 
@@ -185,11 +185,11 @@ cis_p7 %>% filter(ESCIDEOL==10)
 #   geom_bar(position = 'fill')+
 #   coord_flip()+
 #   theme_fivethirtyeight()+
-#   ggtitle('En circunstancias como las actuales, ¿cree Ud. que los
-# partidos y líderes de la oposición tienen que colaborar y apoyar
-# al Gobierno en todo lo posible, dejando sus críticas o
+#   ggtitle('En circunstancias como las actuales, Â¿cree Ud. que los
+# partidos y lÃ­deres de la oposiciÃ³n tienen que colaborar y apoyar
+# al Gobierno en todo lo posible, dejando sus crÃ­ticas o
 # discrepancias para otros momentos, o que deben continuar
-# criticando y oponiéndose al actual Gobierno en todo lo que
+# criticando y oponiÃ©ndose al actual Gobierno en todo lo que
 # consideren?')+
 #   theme(plot.title = element_text(size=14))
 # 
@@ -199,21 +199,21 @@ cis_p7 %>% filter(ESCIDEOL==10)
 #   geom_bar(position = 'fill')+
 #   coord_flip()+
 #   theme_fivethirtyeight()+
-#   ggtitle('¿Cree Ud. que cuando termine la crisis del COVID-19
-# debería hacerse un esfuerzo especial para intentar llegar a
-# grandes acuerdos ante la crisis económica y laboral, o cree que
+#   ggtitle('Â¿Cree Ud. que cuando termine la crisis del COVID-19
+# deberÃ­a hacerse un esfuerzo especial para intentar llegar a
+# grandes acuerdos ante la crisis econÃ³mica y laboral, o cree que
 # lo mejor es que cada partido plantee sus propias alternativas y
 # puntos de vista?')+
 #   theme(plot.title = element_text(size=14))
 # 
 
 #-----------------------------------------------------------------------------------------#
-### -------------------------------------INGLÉS------------------------------------------ ###
+### -------------------------------------INGLÃ‰S------------------------------------------ ###
 #-----------------------------------------------------------------------------------------#
 
-cis_abril<-read_sav("C:/Users/belen/OneDrive/Documentos/Cursos y artículos/CIS/ABRIL/3279.sav")
+cis_abril<-read_sav("C:/Users/belen/OneDrive/Documentos/Cursos y artÃ­culos/CIS/ABRIL/3279.sav")
 
-cis_marzo<-read_sav("C:/Users/belen/OneDrive/Documentos/Cursos y artículos/CIS/MARZO/3277.sav")
+cis_marzo<-read_sav("C:/Users/belen/OneDrive/Documentos/Cursos y artÃ­culos/CIS/MARZO/3277.sav")
 
 escideol_decomp<-cis_marzo %>% group_by(ESCIDEOL)%>% summarise(n=n())
 escideol_indecisos<- cis_marzo %>% filter(ESCIDEOL %in% c(98,99))
@@ -225,12 +225,12 @@ sub<-cis_marzo %>% filter(ESCIDEOLPAR_1 %in% 1:10 & ESCIDEOLPAR_2 %in% 1:10 & ES
   filter(ESCIDEOLPAR_5 %in% 1:10 & ESCIDEOLPAR_6 %in% 1:10 & ESCIDEOLPAR_7 %in% 1:10 & ESCIDEOL %in% 1:10) %>%
   select(ESCIDEOL,ESCIDEOLPAR_1,ESCIDEOLPAR_2,ESCIDEOLPAR_3,ESCIDEOLPAR_4,ESCIDEOLPAR_5,ESCIDEOLPAR_6,ESCIDEOLPAR_7)%>% 
   lapply(as.integer) %>% as.data.frame()
-names(sub)<-c('Encuestado', 'PSOE','PP','VOX','Podemos','IU','Ciudadanos','Más País')
+names(sub)<-c('Encuestado', 'PSOE','PP','VOX','Podemos','IU','Ciudadanos','MÃ¡s PaÃ­s')
 dim(sub)
 sub_gathered<-gather(sub, key='partido', value='valor', -c(Encuestado))
 #loadfonts()
 #names(windowsFonts())
-sub_gathered_2<-sub_gathered %>% filter(partido != 'Más País' & partido != 'IU')
+sub_gathered_2<-sub_gathered %>% filter(partido != 'MÃ¡s PaÃ­s' & partido != 'IU')
 
 ridgeplot_eng<-ggplot(sub_gathered_2, aes(x=valor, y=as.factor(Encuestado), fill=stat(x)))+
   geom_density_ridges_gradient(scale=3) +
@@ -251,12 +251,12 @@ ridgeplot_eng<-ggplot(sub_gathered_2, aes(x=valor, y=as.factor(Encuestado), fill
 ridgeplot_eng
 grid.text("10 - Extreme \nright", x = 0.86, y = 0.35,gp=gpar(fontsize=9,col='grey34'))  
 grid.text("1 - Extreme \nleft", x = 0.86, y = 0.21, gp=gpar(fontsize=9,col='grey34'))  
-grid.text("Source: 'Barómetro marzo 2020' (CIS)", x = 0.84, y = 0.015,gp=gpar(fontsize=9,col='grey56', fontface="italic"))  
+grid.text("Source: 'BarÃ³metro marzo 2020' (CIS)", x = 0.84, y = 0.015,gp=gpar(fontsize=9,col='grey56', fontface="italic"))  
 ridgeplot<-grid.grab()
 ridgeplot_eng<-ggplotify::as.ggplot(ridgeplot)
 
 
-ggsave("C:/Users/belen/OneDrive/Documentos/Cursos y artículos/CIS/ABRIL/ridgeplot_marzo_eng.png",ridgeplot_eng, dpi=350, width=7.34, height =5.67)
+ggsave("C:/Users/belen/OneDrive/Documentos/Cursos y artÃ­culos/CIS/ABRIL/ridgeplot_marzo_eng.png",ridgeplot_eng, dpi=350, width=7.34, height =5.67)
 
 
 ###### COVID ABRIL ########
@@ -281,7 +281,7 @@ cis_covid<- cis_abril %>% select(ESCIDEOL, INTENCIONG, P3,P7,P12,P14, P16)%>%
                                                                              ifelse(INTENCIONG==5, 'IU',
                                                                                     ifelse(INTENCIONG==8, 'ERC',
                                                                                            ifelse(INTENCIONG==98,'NS',
-                                                                                                  ifelse(INTENCIONG==97, 'No votaría',
+                                                                                                  ifelse(INTENCIONG==97, 'No votarÃ­a',
                                                                                                          ifelse(INTENCIONG==99, 'NC','Otro')))))))))))
 
 
@@ -302,7 +302,7 @@ cis_p3<-cis_covid %>% group_by(ESCIDEOL,P3) %>% summarise(n=n()) %>% mutate(ptg=
 
 cis_p7<-cis_covid %>% group_by(ESCIDEOL,P7) %>% summarise(n=n()) %>% mutate(ptg=n/sum(n))
 
-caption<-textGrob("Source: 'Barómetro especial de abril 2020' (CIS)",gp=gpar(fontsize=9, fontface="italic", col='gray43'))
+caption<-textGrob("Source: 'BarÃ³metro especial de abril 2020' (CIS)",gp=gpar(fontsize=9, fontface="italic", col='gray43'))
 
 p3_eng<-ggplot(cis_p3, aes(x=ESCIDEOL,y=ptg*100, fill=P3))+
   geom_bar(stat='identity')+
@@ -340,7 +340,7 @@ not very trustworthy or not trustworthy at all?")+
   annotation_custom(caption,xmin = 12.2,xmax=12.2, ymax=-18.5, ymin=-18.5)
 
 
-ggsave("C:/Users/belen/OneDrive/Documentos/Cursos y artículos/CIS/ABRIL/p7_4_eng.png",p7_eng, dpi=350, width=6.76, height =5.79 )
+ggsave("C:/Users/belen/OneDrive/Documentos/Cursos y artÃ­culos/CIS/ABRIL/p7_4_eng.png",p7_eng, dpi=350, width=6.76, height =5.79 )
 
-ggsave("C:/Users/belen/OneDrive/Documentos/Cursos y artículos/CIS/ABRIL/p3_4_eng.png",p3_eng, dpi=350, width=6.76, height =5.79 )
+ggsave("C:/Users/belen/OneDrive/Documentos/Cursos y artÃ­culos/CIS/ABRIL/p3_4_eng.png",p3_eng, dpi=350, width=6.76, height =5.79 )
 
