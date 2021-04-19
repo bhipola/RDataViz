@@ -36,8 +36,8 @@ ggplot(wid_1p_averages, mapping=aes(x=Year, y=participation, color=country, labe
   labs(x="Year",
        y="Share",
        title="Pre-tax National Income Share Held by Top 1% (1980-2019)",
-       subtitle="Pre-tax national includes labor and capital income and does not account for tax or  
-       transfer operations. In 2019, USA's top 1% held <span style='color:#8DA0CB;'>**18.7%** </span>of pre-tax national income,  
+       subtitle="Pre-tax national income includes labor and capital income and does not account for  
+       tax or transfer operations. In 2019, USA's top 1% held <span style='color:#8DA0CB;'>**18.7%** </span>of pre-tax national income,  
        Spain's top 1% held <span style='color:#fc8d62;'>**12.2%**</span> while the OECD average was <span style='color:#7acab1;'>**12.7%**</span>.",
        caption="Source: World Inequality Lab Database (WID)")+
   scale_y_continuous(limits = c(0,0.2))
