@@ -41,3 +41,6 @@ ggplot(wid_1p_averages, mapping=aes(x=Year, y=participation, color=country, labe
        Spain's top 1% held <span style='color:#fc8d62;'>**12.2%**</span> while the OECD average was <span style='color:#7acab1;'>**12.7%**</span>.",
        caption="Source: World Inequality Lab Database (WID)")+
   scale_y_continuous(limits = c(0,0.2))
+
+
+ggsave(plot=top1_plot,filename="top1_sp_usa_oecd.png",dpi=350, width=7,height=6)
